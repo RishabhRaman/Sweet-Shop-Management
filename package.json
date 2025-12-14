@@ -1,0 +1,69 @@
+{
+  "name": "sweet-shop-management",
+  "version": "1.0.0",
+  "description": "A complete Sweet Shop Management System built with TDD",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "dev:all": "concurrently \"npm run dev\" \"npm run client\" --names \"backend,frontend\" --prefix name --prefix-colors \"blue,green\"",
+    "seed": "node src/scripts/seedSweets.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
+  },
+  "keywords": [
+    "sweet-shop",
+    "management",
+    "tdd",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "jsonwebtoken": "^9.0.2",
+    "bcrypt": "^5.1.1",
+    "zod": "^3.22.4",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "nodemon": "^3.0.2",
+    "@types/jest": "^29.5.11",
+    "cross-env": "^7.0.3",
+    "concurrently": "^9.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "testMatch": [
+      "**/__tests__/**/*.js",
+      "**/?(*.)+(spec|test).js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js",
+      "!src/config/**"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ],
+    "maxWorkers": 1,
+    "globalTeardown": "<rootDir>/src/tests/teardown.js"
+  }
+}
+
