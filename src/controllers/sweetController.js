@@ -14,7 +14,8 @@ export class SweetController {
    */
   create = async (req, res, next) => {
     try {
-      const sweet = await this.sweetService.createSweet(req.body);
+      const sweetData = { ...req.body, user: req.user.userId };
+      const sweet = await this.sweetService.createSweet(sweetData);
       res.status(201).json({
         message: 'Sweet created successfully',
         sweet,
@@ -36,6 +37,7 @@ export class SweetController {
         category: req.query.category,
         minPrice: req.query.minPrice ? parseFloat(req.query.minPrice) : undefined,
         maxPrice: req.query.maxPrice ? parseFloat(req.query.maxPrice) : undefined,
+        userId: req.user.userId,
       };
 
       // Remove undefined values
@@ -62,7 +64,7 @@ export class SweetController {
    */
   getById = async (req, res, next) => {
     try {
-      const sweet = await this.sweetService.getSweetById(req.params.id);
+      const sweet = await this.sweetService.getSweetById(req.params.id, req.user.userId);
       res.status(200).json({
         message: 'Sweet retrieved successfully',
         sweet,
@@ -78,7 +80,7 @@ export class SweetController {
    */
   update = async (req, res, next) => {
     try {
-      const sweet = await this.sweetService.updateSweet(req.params.id, req.body);
+      const sweet = await this.sweetService.updateSweet(req.params.id, req.body, req.user.userId);
       res.status(200).json({
         message: 'Sweet updated successfully',
         sweet,
@@ -94,7 +96,7 @@ export class SweetController {
    */
   delete = async (req, res, next) => {
     try {
-      const sweet = await this.sweetService.deleteSweet(req.params.id);
+      const sweet = await this.sweetService.deleteSweet(req.params.id, req.user.userId);
       res.status(200).json({
         message: 'Sweet deleted successfully',
         sweet,
@@ -111,7 +113,7 @@ export class SweetController {
   purchase = async (req, res, next) => {
     try {
       const quantity = req.body.quantity || 1;
-      const sweet = await this.sweetService.purchaseSweet(req.params.id, quantity);
+      const sweet = await this.sweetService.purchaseSweet(req.params.id, quantity, req.user.userId);
       res.status(200).json({
         message: 'Purchase successful',
         sweet,
@@ -127,7 +129,7 @@ export class SweetController {
    */
   restock = async (req, res, next) => {
     try {
-      const sweet = await this.sweetService.restockSweet(req.params.id, req.body.quantity);
+      const sweet = await this.sweetService.restockSweet(req.params.id, req.body.quantity, req.user.userId);
       res.status(200).json({
         message: 'Restock successful',
         sweet,

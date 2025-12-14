@@ -1,8 +1,13 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { handleError } from './utils/errorHandler.js';
 import authRoutes from './routes/authRoutes.js';
 import sweetRoutes from './routes/sweetRoutes.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -10,6 +15,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 
 // Health check route
 app.get('/health', (req, res) => {
@@ -44,6 +52,11 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/sweets', sweetRoutes);
+
+// Catch all handler: send back React's index.html file for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'dist', 'index.html'));
+});
 
 // 404 handler
 app.use((req, res) => {

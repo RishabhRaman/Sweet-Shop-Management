@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
+    "build": "npm run client:build",
     "dev": "nodemon src/server.js",
     "client": "cd client && npm run dev",
     "client:build": "cd client && npm run build",
