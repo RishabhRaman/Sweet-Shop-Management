@@ -309,12 +309,6 @@ npm run test:coverage
 - **Comprehensive Testing**: AI helped generate thorough test coverage from the start
 - **Error Prevention**: AI caught potential issues early in the development process
 
-### Transparency
-
-All commits in this project include:
-```
-Co-authored-by: ChatGPT <AI@users.noreply.github.com>
-```
 
 ## License
 
@@ -324,3 +318,4 @@ ISC
 
 This is a TDD learning project. Contributions should follow the Red → Green → Refactor cycle.
 
+# Sweet-Shop-Management
